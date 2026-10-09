@@ -84,6 +84,11 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+if vim.fn.has 'win32' == 1 then
+  -- Explicitly tell Neovim's environment where to look for gcc and make
+  vim.env.PATH = 'C:\\msys64\\ucrt64\\bin;C:\\msys64\\usr\\bin;' .. vim.env.PATH
+end
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -874,6 +879,10 @@ require('lazy').setup({
     branch = 'main',
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
     config = function()
+      -- Force treesitter to user msys compiler on windows
+      require('nvim-treesitter.install').compilers = { 'gcc' }
+      require('nvim-treesitter.install').prefer_git = true
+
       -- ensure basic parser are installed
       local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
       require('nvim-treesitter').install(parsers)
