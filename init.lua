@@ -606,7 +606,7 @@ require('lazy').setup({
       ---@type table<string, vim.lsp.Config>
       local servers = {
         -- clangd = {},
-        -- gopls = {},
+        gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
         --
@@ -977,5 +977,16 @@ require('lazy').setup({
   },
 })
 
+local function git_branch()
+  local b_data = vim.b.gitsigns_status_dict
+  if b_data and b_data.head and b_data.head ~= '' then return '(Git: ' .. b_data.head .. ') ' end
+  return ''
+end
+
+-- _G.get_statusline_git = git_branch
+-- vim.opt.statusline = '%<%f %h%m%r %= ' .. git_branch() .. '%l,%c %P'
+
+_G.get_statusline_git = git_branch
+vim.opt.statusline = '%<%f %h%m%r %= %{%v:lua.get_statusline_git()%}%l,%c %P'
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
