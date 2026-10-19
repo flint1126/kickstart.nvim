@@ -949,7 +949,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
@@ -976,6 +976,11 @@ require('lazy').setup({
     },
   },
 })
+
+vim.opt.tabstop = 2 -- \t visually looks like 2 spaces
+vim.opt.shiftwidth = 2 -- Controls indentation size by auto indentation
+vim.opt.softtabstop = 2 -- <Tab> inserts 2 spaces
+vim.opt.expandtab = true -- Convert tab to spaces
 
 local function git_branch()
   local b_data = vim.b.gitsigns_status_dict
